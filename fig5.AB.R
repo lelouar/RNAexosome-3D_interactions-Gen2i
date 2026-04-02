@@ -14,8 +14,8 @@ quiet(library(svglite))
 quiet(library(ggsci))
 
 # SOURCE APA AND GRAPHICAL REALTED LIBRARIES ----
-source("STAR_METHODS/g2i_plotfig_lib.R")
-source("STAR_METHODS/g2i_apa_lib.R")
+source("g2i_plotfig_lib.R")
+source("g2i_apa_lib.R")
 
 library(ggthemes)
 theme_set(theme_tufte())
@@ -29,7 +29,7 @@ cat(" => ok\n")
 
 # ---- Parameters (hardcoded from config/src/yaml/fig.yaml) ----
 knitr::opts_knit$set(root.dir = here::here())
-output <- "STAR_METHODS/plots/fig5_apa_top5p"
+output <- "plots/fig5_apa_top5p"
 
 params.rname   <- "tile_10kb"
 params.aname   <- "chr_bin"
@@ -50,8 +50,8 @@ params <- list(
     )
   ),
   h5path = list(
-    WT     = "STAR_METHODS/data/hic_wt.h5",
-    MTR4KD = "STAR_METHODS/data/hic_mtr4kd.h5"
+    WT     = "data/hic_wt.h5",
+    MTR4KD = "data/hic_mtr4kd.h5"
   ),
   apa_size    = 21L,
   offset      = 0L,
@@ -121,8 +121,8 @@ skip_go <- TRUE
   Go <- makeTile10kb()
 
   # --- Bait: RAD21 peaks in top 5% by MTR4 enrichment (rad21_mtr4_zscore_100tile >= 95) ---
-  rad21_gr <- loadBED("STAR_METHODS/data/rad21.bed")
-  mtr4_bw  <- "STAR_METHODS/data/mtr4.bw"
+  rad21_gr <- loadBED("data/rad21.bed")
+  mtr4_bw  <- "data/mtr4.bw"
   rad21_ext <- suppressWarnings(GenomicRanges::trim(GenomicRanges::resize(rad21_gr, 2001L, fix = "center")))
   bw_gr     <- rtracklayer::import.bw(mtr4_bw, which = rad21_ext)
   ol        <- GenomicRanges::findOverlaps(rad21_ext, bw_gr)
@@ -137,7 +137,7 @@ skip_go <- TRUE
   l_bait_go_tile[["rad21"]] <- IRanges::subsetByOverlaps(Go, Go_bait)
 
   # --- Anchor: active TSS (tss_act.hg19.bed — all rows are active) ---
-  tss_act_gr <- loadBED("STAR_METHODS/data/tss_act.bed")
+  tss_act_gr <- loadBED("data/tss_act.bed")
   l_anchor_go_tile[["tss_tss_act"]] <- IRanges::subsetByOverlaps(Go, tss_act_gr)
 
   rm(rad21_gr, rad21_ext, bw_gr, ol, mtr4_mean, mtr4_z, mtr4_tile, Go_bait, tss_act_gr)

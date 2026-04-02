@@ -19,9 +19,9 @@ library(GenomicRanges)
 library(ggpubr)
 library(dplyr)
 library(RColorBrewer)
-source("STAR_METHODS/Analysis_Functions.R")
-source("STAR_METHODS/g2i_plotfig_lib.R")
-source("STAR_METHODS/g2i_apa_lib.R")
+source("Analysis_Functions.R")
+source("g2i_plotfig_lib.R")
+source("g2i_apa_lib.R")
 # ============================================================= =
 
 # SETSEED  ==================================================== =
@@ -36,7 +36,7 @@ params <- NULL
 params[["apa_size"]] <- 21
 params[["d_bin_min"]] <- 21L
 params[["d_bin_max"]] <- 100L
-params[["h5path"]] <- list(WT = "STAR_METHODS/data/hic_wt.h5")
+params[["h5path"]] <- list(WT = "data/hic_wt.h5")
 params[["norm"]] <- c("raw","log10","quant","quant_na")
 params[["cons_nm"]] <- "intra"
 params[["save_dt"]] <- F
@@ -51,7 +51,7 @@ params[["plot_lst"]] <- c("APA_panel")
 params[["fig_type"]] <- "png"
 params[["width"]]    <- 800L
 params[["height"]]   <- 800L
-output <- "STAR_METHODS/plots/fig3_apa"
+output <- "plots/fig3_apa"
 # params[["nb_iter"]] <- 0
 # 
 # ## BAIT ANCHOR Params
@@ -124,11 +124,11 @@ cat("load Tile ranges and bait & anchor ...\n")
 Go <- makeTile10kb()
 
 mtr4_h3k4me1_gr <- subsetByOverlaps(
-  loadBED("STAR_METHODS/data/h3k4me1_anc.bed"),
-  loadBED("STAR_METHODS/data/mtr4_anc.bed")
+  loadBED("data/h3k4me1_anc.bed"),
+  loadBED("data/mtr4_anc.bed")
 )
 l_bait_go_tile[["anchor_rn1"]]  <- subsetByOverlaps(Go, mtr4_h3k4me1_gr)
-l_anchor_go_tile[["tss_rn1"]]   <- subsetByOverlaps(Go, loadBED("STAR_METHODS/data/tss_act.bed"))
+l_anchor_go_tile[["tss_rn1"]]   <- subsetByOverlaps(Go, loadBED("data/tss_act.bed"))
 
 if(length(l_bait_go_tile) != length(l_anchor_go_tile)){
   if(length(l_bait_go_tile) < length(l_anchor_go_tile)) l_bait_go_tile <- rep(l_bait_go_tile, length(l_anchor_go_tile))
@@ -201,10 +201,10 @@ loadBED6 <- function(path) {
 
 # P56: active+nodiv TSS × per-TSS max ULS_V × 5kb PROMPTs × Q4
 # YES = H3K4ME1+MTR4 anchors (MTR4 RDS), NO = H3K4ME1-only anchors (H3K4ME1 RDS)
-fish_tss_gr <- loadBED6("STAR_METHODS/data/tss.bed")
-fish_tss_act <- loadBED6("STAR_METHODS/data/tss_act.bed")
-fish_ncRNA   <- loadBED6("STAR_METHODS/data/ncRNA_MTR4kd.bed")
-nodiv_gr     <- readRDS("STAR_METHODS/data/TSSnodiv.gr")
+fish_tss_gr <- loadBED6("data/tss.bed")
+fish_tss_act <- loadBED6("data/tss_act.bed")
+fish_ncRNA   <- loadBED6("data/ncRNA_MTR4kd.bed")
+nodiv_gr     <- readRDS("data/TSSnodiv.gr")
 suppressWarnings(GenomeInfoDb::seqlevelsStyle(nodiv_gr) <- "NCBI")
 
 bait_is_active <- integer(length(fish_tss_gr))
@@ -223,11 +223,11 @@ cat(sprintf("TSS with PROMPTs (strand-aware 5kb): %d / %d\n",
 prom_dt <- data.table(i_IDX = seq_along(fish_tss_gr), has_p = bait_has_prompts)
 
 # Anchor BEDs
-anc_mtr4    <- loadBED("STAR_METHODS/data/mtr4_anc.bed")
-anc_h3k4me1 <- loadBED("STAR_METHODS/data/h3k4me1_anc.bed")
+anc_mtr4    <- loadBED("data/mtr4_anc.bed")
+anc_h3k4me1 <- loadBED("data/h3k4me1_anc.bed")
 
 # --- "YES" GROUP: MTR4 RDS — H3K4ME1+MTR4 anchors, per-TSS max ULS_V --------
-hic_mtr4     <- readRDS("STAR_METHODS/data/hic_mtr4_metrics.rds")
+hic_mtr4     <- readRDS("data/hic_mtr4_metrics.rds")
 mtr4_metrics <- as.data.table(hic_mtr4$METRICS.df); hic_mtr4 <- NULL; gc()
 
 mtr4_has_h3k4me1 <- integer(length(anc_mtr4))
@@ -243,7 +243,7 @@ mtr4_metrics <- NULL; f_yes_raw <- NULL; gc()
 cat(sprintf("YES TSS: %d, PROMPTs: %d\n", nrow(tss_yes), sum(tss_yes$has_p)))
 
 # --- "NO" GROUP: H3K4ME1 RDS — H3K4ME1-only anchors, per-TSS max ULS_V ------
-hic_h3k4me1     <- readRDS("STAR_METHODS/data/hic_h3k4me1_metrics.rds")
+hic_h3k4me1     <- readRDS("data/hic_h3k4me1_metrics.rds")
 h3k4me1_metrics <- as.data.table(hic_h3k4me1$METRICS.df); hic_h3k4me1 <- NULL; gc()
 
 h3k4me1_has_mtr4 <- integer(length(anc_h3k4me1))

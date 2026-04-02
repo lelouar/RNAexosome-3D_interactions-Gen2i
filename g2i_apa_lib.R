@@ -1,4 +1,4 @@
-source("STAR_METHODS/g2i.R")
+source("g2i.R")
 
 ###  APA PREPROCESS ----
 #' Title

@@ -9,10 +9,10 @@
 # single-TSS gene (sglTSS catalogue).
 #
 # Working directory: project root (00Kiernan_PROJECT-001/)
-# Run: Rscript STAR_METHODS/FigS3_Venn_DEG_PROMPTS.R
+# Run: Rscript FigS3_Venn_DEG_PROMPTS.R
 # ============================================================
 
-source("STAR_METHODS/Analysis_Functions.R")
+source("Analysis_Functions.R")
 suppressPackageStartupMessages(library(eulerr))
 suppressPackageStartupMessages(library(ggpubr))
 
@@ -20,11 +20,11 @@ suppressPackageStartupMessages(library(ggpubr))
 # 0. Paths
 # ============================================================
 
-path_tx   <- check_file("STAR_METHODS/data/matrecap_genes.rds")
-path_sgl  <- check_file("STAR_METHODS/data/sglTSS.gr")
-path_lZ1  <- check_file("STAR_METHODS/data/prompts_Z1kd.rds")
-path_lM4  <- check_file("STAR_METHODS/data/prompts_MTR4kd.rds")
-path_lZ8  <- check_file("STAR_METHODS/data/prompts_Z8kd.rds")
+path_tx   <- check_file("data/matrecap_genes.rds")
+path_sgl  <- check_file("data/sglTSS.gr")
+path_lZ1  <- check_file("data/prompts_Z1kd.rds")
+path_lM4  <- check_file("data/prompts_MTR4kd.rds")
+path_lZ8  <- check_file("data/prompts_Z8kd.rds")
 
 # ============================================================
 # 1. Load data

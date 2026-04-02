@@ -14,8 +14,8 @@ quiet(library(svglite))
 quiet(library(ggsci))
 
 # SOURCE APA AND GRAPHICAL REALTED LIBRARIES ----
-source("STAR_METHODS/g2i_plotfig_lib.R")
-source("STAR_METHODS/g2i_apa_lib.R")
+source("g2i_plotfig_lib.R")
+source("g2i_apa_lib.R")
 
 library(ggthemes)
 theme_set(theme_tufte())
@@ -29,7 +29,7 @@ cat(" => ok\n")
 
 # ---- Parameters (hardcoded from config/src/yaml/fig.yaml) ----
 knitr::opts_knit$set(root.dir = here::here())
-output <- "STAR_METHODS/plots/fig4_apa"
+output <- "plots/fig4_apa"
 
 params.rname   <- "tile_10kb"
 params.aname   <- "chr_bin"
@@ -52,8 +52,8 @@ params <- list(
     )
   ),
   h5path = list(
-    WT     = "STAR_METHODS/data/hic_wt.h5",
-    MTR4KD = "STAR_METHODS/data/hic_mtr4kd.h5"
+    WT     = "data/hic_wt.h5",
+    MTR4KD = "data/hic_mtr4kd.h5"
   ),
   apa_size    = 21L,
   offset      = 0L,
@@ -124,9 +124,9 @@ skip_go <- TRUE
   Go <- makeTile10kb()
 
   # --- Bait: H3K4ME1 enhancers with MTR4 present and NOT within 10kb of a TSS ---
-  h3k4me1_gr <- loadBED("STAR_METHODS/data/h3k4me1_anc.bed")
-  mtr4_gr    <- loadBED("STAR_METHODS/data/mtr4.bed")
-  tss_gr     <- loadBED("STAR_METHODS/data/tss.bed")
+  h3k4me1_gr <- loadBED("data/h3k4me1_anc.bed")
+  mtr4_gr    <- loadBED("data/mtr4.bed")
+  tss_gr     <- loadBED("data/tss.bed")
   tss_pm10kb <- suppressWarnings(GenomicRanges::trim(GenomicRanges::resize(tss_gr, 20001L, fix = "center")))
   Go_bait <- IRanges::subsetByOverlaps(
     IRanges::subsetByOverlaps(h3k4me1_gr, mtr4_gr),
@@ -135,7 +135,7 @@ skip_go <- TRUE
   l_bait_go_tile[["enhancer"]] <- IRanges::subsetByOverlaps(Go, Go_bait)
 
   # --- Anchor: TSS with MTR4-dependent PROMPT nearby ---
-  prompts_gr <- readRDS("STAR_METHODS/data/prompts_MTR4kd.rds")
+  prompts_gr <- readRDS("data/prompts_MTR4kd.rds")
   suppressWarnings(GenomeInfoDb::seqlevelsStyle(prompts_gr) <- "NCBI")
   Go_anchor <- IRanges::subsetByOverlaps(tss_gr, prompts_gr)
   l_anchor_go_tile[["tss_tss_all"]] <- IRanges::subsetByOverlaps(Go, Go_anchor)

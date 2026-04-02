@@ -20,7 +20,7 @@ check_file <- function(path, label = path) {
 }
 
 # Create output directory
-plots_dir <- "STAR_METHODS/plots"
+plots_dir <- "plots"
 dir.create(plots_dir, showWarnings = FALSE, recursive = TRUE)
 
 save_plot <- function(p, filename, width = 7, height = 7, dpi = 150) {

@@ -14,11 +14,11 @@
 #   Control sites = "grey60"
 #
 # Working directory: project root (00Kiernan_PROJECT-001/)
-# Run: Rscript STAR_METHODS/Fig1_Recruitment_Profiles.R
+# Run: Rscript Fig1_Recruitment_Profiles.R
 # ============================================================
 
-source("STAR_METHODS/Analysis_Functions.R")
-source("STAR_METHODS/g2i_plotfig_lib.R")   # provides redim_matrix()
+source("Analysis_Functions.R")
+source("g2i_plotfig_lib.R")   # provides redim_matrix()
 library(pheatmap)
 library(eulerr)
 library(ggpubr)
@@ -29,15 +29,15 @@ library(gridExtra)
 # 1. File Paths
 # ============================================================
 
-bed_mtr4 <- check_file("STAR_METHODS/data/mtr4_peaks.bed")
-bed_z1   <- check_file("STAR_METHODS/data/z1_peaks.bed")
-bed_z8   <- check_file("STAR_METHODS/data/z8_peaks.bed")
+bed_mtr4 <- check_file("data/mtr4_peaks.bed")
+bed_z1   <- check_file("data/z1_peaks.bed")
+bed_z8   <- check_file("data/z8_peaks.bed")
 
-bw_mtr4  <- check_file("STAR_METHODS/data/mtr4.bw")
-bw_z1    <- check_file("STAR_METHODS/data/z1.bw")
-bw_z8    <- check_file("STAR_METHODS/data/z8.bw")
+bw_mtr4  <- check_file("data/mtr4.bw")
+bw_z1    <- check_file("data/z1.bw")
+bw_z8    <- check_file("data/z8.bw")
 
-path_sgl <- check_file("STAR_METHODS/data/sglTSS.gr")
+path_sgl <- check_file("data/sglTSS.gr")
 
 # ============================================================
 # 2. Load and Format Peak Files (Ensembl chr style)

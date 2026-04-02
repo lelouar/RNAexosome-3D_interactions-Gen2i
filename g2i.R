@@ -1,4 +1,4 @@
-# STAR_METHODS/g2i.R
+# g2i.R
 # Minimal standalone replacements for g2i / g2ismk package functions.
 # Sourced by g2i_apa_lib.R, fig4.AB.R, fig5.AB.R.
 

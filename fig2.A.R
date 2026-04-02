@@ -412,7 +412,7 @@ if(params$type == "NCRna") {
 }
 
 #### SAVE PLOTS ----
-out_dir <- "STAR_METHODS/plots"
+out_dir <- "plots"
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 for (nm in names(gg)) {
   if (!is.null(gg[[nm]])) {
